@@ -9,18 +9,23 @@ public:
 	void Update();
 
 	char rotateClockWiseKey;
+	int rotateClockWiseCoolDown{};
 	int rotateClockWise{};
 
 	char rotateCounterClockWiseKey;
+	int rotateCounterClockWiseCoolDown{};
 	int rotateCounterClockWise{};
 
 	char rightKey;
+	int rightCoolDown{};
 	int right{};
 
 	char leftKey;
+	int leftCoolDown{};
 	int left{};
 
 	char dumpKey;
+	int dumpCoolDown{};
 	int dump{};
 
 	
