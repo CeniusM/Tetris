@@ -21,7 +21,7 @@ void Tetris::AddNewPiece()
 /// <summary>
 /// IMPORTANT: Temp solution based on a 2x2 piece!
 /// </summary>
-bool Tetris::IsPositionFree(int col, int row)
+bool Tetris::IsPositionFree(int row, int col)
 {
 	if (col <= 0 || col+1 >= cols || row-1 <= 0)
 		return false;
