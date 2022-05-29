@@ -4,21 +4,23 @@
 
 void TetrisGUI::PrintBoard()
 {
+	int reverseI = boardHeight - 1;
 	for (int i = 0; i < boardHeight; i++)
 	{
 		for (int j = 0; j < boardWidth; j++)
 		{
 			if (board[i][j] == 0)
 			{
-				screen[j * 2 + i * screenWidth] = ' ';
-				screen[j * 2 + i * screenWidth + 1] = ' ';
+				screen[(j << 1) + reverseI * screenWidth] = ' ';
+				screen[(j << 1) + reverseI * screenWidth + 1] = ' ';
 			}
 			else
 			{
-				screen[j * 2 + i * screenWidth] = 0x2588;
-				screen[j * 2 + i * screenWidth + 1] = 0x2588;
+				screen[(j << 1) + reverseI * screenWidth] = 0x2588;
+				screen[(j << 1) + reverseI * screenWidth + 1] = 0x2588;
 			}
 		}
+		reverseI--;
 	}
 
 	// Display Frame
