@@ -2,7 +2,6 @@
 
 #include "TetrisGUI.h"
 
-
 void TetrisGUI::PrintBoard()
 {
 	for (int i = 0; i < boardHeight; i++)
@@ -11,13 +10,13 @@ void TetrisGUI::PrintBoard()
 		{
 			if (board[i][j] == 0)
 			{
-				screen[j + i * screenWidth] = ' ';
-				screen[j + i * screenWidth + 1] = ' ';
+				screen[j * 2 + i * screenWidth] = ' ';
+				screen[j * 2 + i * screenWidth + 1] = ' ';
 			}
 			else
 			{
-				screen[j + i * screenWidth] = 0x2588;
-				screen[j + i * screenWidth + 1] = 0x2588;
+				screen[j * 2 + i * screenWidth] = 0x2588;
+				screen[j * 2 + i * screenWidth + 1] = 0x2588;
 			}
 		}
 	}
