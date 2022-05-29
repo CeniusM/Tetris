@@ -17,7 +17,7 @@ void TetrisGUI::PrintBoard()
 			else
 			{
 				screen[j + i * screenWidth] = 0x2588;
-				screen[j + i * screenWidth * 2 + 1] = 0x2588;
+				screen[j + i * screenWidth + 1] = 0x2588;
 			}
 		}
 	}
