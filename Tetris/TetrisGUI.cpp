@@ -21,6 +21,10 @@ void TetrisGUI::PrintBoard()
 			}
 		}
 	}
+
+	// Display Frame
+	screen[screenWidth * screenHeight - 1] = '\0';
+	WriteConsoleOutputCharacter(hConsole, screen, screenWidth * screenHeight, { 0,0 }, &dwBytesWritten);
 }
 
 void TetrisGUI::SetConsoleSize(int x, int y, int charWidth, int charHeight)
