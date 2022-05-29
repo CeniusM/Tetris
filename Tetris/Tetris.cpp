@@ -18,15 +18,18 @@ void Tetris::AddNewPiece()
 	currentPiecePosition[1] = (cols-1) / 2;
 }
 
+/// <summary>
+/// IMPORTANT: Temp solution based on a 2x2 piece!
+/// </summary>
 bool Tetris::IsPositionFree(int col, int row)
 {
-	if (col < 0 || col+1 >= cols || row-1 < 0)
+	if (col <= 0 || col+1 >= cols || row-1 <= 0)
 		return false;
 
-	return (board[row][col] != 1
-		&& board[row-1][col] != 1
-		&& board[row][col+1] != 1
-		&& board[row - 1][col + 1] != 1);
+	return (board[row][col] != (int)FieldState::Ground
+		&& board[row-1][col] != (int)FieldState::Ground
+		&& board[row][col+1] != (int)FieldState::Ground
+		&& board[row - 1][col + 1] != (int)FieldState::Ground);
 }
 
 void Tetris::InitializeBoard()
@@ -63,7 +66,7 @@ void Tetris::MovePiece(Direction direction)
 		return;
 	}
 
-	SettleAndNewPiece(newPosition);
+	SettleAndNewPiece(currentPiecePosition);
 }
 
 void Tetris::SettleAndNewPiece(int position[2])
@@ -80,16 +83,16 @@ void Tetris::ErasePiece()
 	int row = currentPiecePosition[0];
 	int col = currentPiecePosition[1];
 
-	board[row][col] = 0;
-	board[row - 1][col] = 0;
-	board[row][col + 1] = 0;
-	board[row - 1][col + 1] = 0;
+	board[row][col] = (int)FieldState::Empty;
+	board[row - 1][col] = (int)FieldState::Empty;
+	board[row][col + 1] = (int)FieldState::Empty;
+	board[row - 1][col + 1] = (int)FieldState::Empty;
 }
 
 void Tetris::DrawPiece(int newPosition[2], FieldState state)
 {
 	currentPiecePosition[0] = newPosition[0];
-	currentPiecePosition[0] = newPosition[0];
+	currentPiecePosition[1] = newPosition[1];
 
 	int row = newPosition[0];
 	int col = newPosition[1];
@@ -106,8 +109,10 @@ Tetris::~Tetris()
 
 void Tetris::Update()
 {
+	if (IsTerminated) return;
+
 	ticksElapsed++;
-	if (ticksElapsed % 100 != 0) return;
+	if (ticksElapsed % 25 != 0) return;
 
 	MovePiece(Direction::Down);
 }
