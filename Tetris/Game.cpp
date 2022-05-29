@@ -48,5 +48,9 @@ void GameLoop()
 		long long mDelay = 10000 - microseconds.count();
 		if (mDelay > 0)
 			std::this_thread::sleep_for(std::chrono::microseconds(mDelay));
+
+
+		// debuging
+		std::this_thread::sleep_for(std::chrono::microseconds(100));
 	}
 }
