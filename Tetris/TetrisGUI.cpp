@@ -28,6 +28,21 @@ void TetrisGUI::PrintBoard()
 	WriteConsoleOutputCharacter(hConsole, screen, screenWidth * screenHeight, { 0,0 }, &dwBytesWritten);
 }
 
+void TetrisGUI::PrintEndScreen()
+{
+	for (int i = 0; i < boardHeight; i++)
+	{
+		for (int j = 0; j < boardWidth; j++)
+		{
+			if (i == j || j >> 1 == i || i >> 1 == j)
+			{
+				screen[(j << 1) + i * screenWidth] = 0x2588;
+				screen[(j << 1) + i * screenWidth + 1] = 0x2588;
+			}
+		}
+	}
+}
+
 void TetrisGUI::SetConsoleSize(int x, int y, int charWidth, int charHeight)
 {
 	HWND console = GetConsoleWindow();

@@ -52,5 +52,10 @@ void GameLoop()
 
 		// debuging
 		//std::this_thread::sleep_for(std::chrono::microseconds(100));
+
+		if (tetrisGame.IsTerminated)
+			break;
 	}
+
+
 }

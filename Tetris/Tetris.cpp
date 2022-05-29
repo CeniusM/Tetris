@@ -135,6 +135,11 @@ void Tetris::RotateCounterClockWise()
 {
 }
 
+void Tetris::Down()
+{
+	MovePiece(Direction::Down);
+}
+
 void Tetris::Dump()
 {
 }

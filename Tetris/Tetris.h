@@ -24,6 +24,7 @@ public:
 	void MoveLeft();
 	void RotateClockWise();
 	void RotateCounterClockWise();
+	void Down();
 	void Dump();
 
 	int** GetBoard();

@@ -9,6 +9,7 @@ public:
 	~TetrisGUI();
 
 	void PrintBoard();
+	void PrintEndScreen();
 
 private:
 	void SetConsoleSize(int x, int y, int charWidth, int charHeight);
