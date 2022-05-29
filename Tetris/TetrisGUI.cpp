@@ -1,6 +1,6 @@
 #include <Windows.h>
 
-#include "GUI.h"
+#include "TetrisGUI.h"
 
 
 void TetrisGUI::PrintBoard()
@@ -11,13 +11,13 @@ void TetrisGUI::PrintBoard()
 		{
 			if (board[i][j] == 0)
 			{
-				screen[i + j * boardWidth] = ' ';
-				screen[i + j * boardWidth + 1] = ' ';
+				screen[i + j * screenWidth] = ' ';
+				screen[i + j * screenWidth + 1] = ' ';
 			}
 			else
 			{
-				screen[i + j * boardWidth] = 0x2588;
-				screen[i + j * boardWidth + 1] = 0x2588;
+				screen[i + j * screenWidth] = 0x2588;
+				screen[i + j * screenWidth * 2 + 1] = 0x2588;
 			}
 		}
 	}
@@ -40,7 +40,7 @@ TetrisGUI::TetrisGUI(int** board, int width, int height)
 	screenWidth = width * 2; // each square is 2 wide
 	screenHeight = height;
 
-	wchar_t* screen = new wchar_t[screenWidth * screenHeight];
+	screen = new wchar_t[screenWidth * screenHeight];
 	for (int i = 0; i < screenWidth; i++)
 	{
 		for (int j = 0; j < screenHeight; j++)

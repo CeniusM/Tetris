@@ -3,11 +3,8 @@
 #include <algorithm>
 
 #include "Tetris.h"
-#include "GUI.h"
-
-int gameWidth = 10;
-int gameHeight = 20;
-
+#include "TetrisGUI.h"
+#include "Game.h"
 
 void GameLoop()
 {
@@ -52,6 +49,4 @@ void GameLoop()
 		if (mDelay > 0)
 			std::this_thread::sleep_for(std::chrono::microseconds(mDelay));
 	}
-
-
 }
