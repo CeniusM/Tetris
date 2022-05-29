@@ -66,7 +66,8 @@ void Tetris::MovePiece(Direction direction)
 		return;
 	}
 
-	SettleAndNewPiece(currentPiecePosition);
+	if(direction == Direction::Down)
+		SettleAndNewPiece(currentPiecePosition);
 }
 
 void Tetris::SettleAndNewPiece(int position[2])
