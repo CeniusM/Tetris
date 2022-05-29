@@ -20,13 +20,13 @@ void Tetris::AddNewPiece()
 
 bool Tetris::IsPositionFree(int col, int row)
 {
-	if (col < 0 || col >= cols || row < 0 || row >= rows)
+	if (col < 0 || col+1 >= cols || row-1 < 0)
 		return false;
 
-	return (board[row][col] == 0
-		&& board[row-1][col] == 0
-		&& board[row][col+1] == 0
-		&& board[row - 1][col + 1] == 0);
+	return (board[row][col] != 1
+		&& board[row-1][col] != 1
+		&& board[row][col+1] != 1
+		&& board[row - 1][col + 1] != 1);
 }
 
 void Tetris::InitializeBoard()
