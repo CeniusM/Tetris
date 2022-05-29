@@ -1,6 +1,7 @@
 #pragma once
 
 enum class Direction { Down, Right, Left };
+enum class FieldState { Empty = 0, Piece = 1, Ground = 2 };
 
 class Tetris
 {
@@ -13,6 +14,10 @@ public:
 	Tetris(int cols, int rows);
 	~Tetris();
 
+	/// <summary>
+	/// Expected to be called by game loop at each clock tick.
+	/// Clock tick is every 10 ms.
+	/// </summary>
 	void Update();
 
 	void MoveRight();
@@ -40,5 +45,6 @@ private:
 	void MovePiece(Direction direction);
 	bool IsPositionFree(int cols, int rows);
 	void ErasePiece();
-	void DrawPiece(int newPosition[2]);
+	void DrawPiece(int newPosition[2], FieldState state);
+	void SettleAndNewPiece(int position[2]);
 };

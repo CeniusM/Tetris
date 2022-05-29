@@ -20,6 +20,9 @@ void Tetris::AddNewPiece()
 
 bool Tetris::IsPositionFree(int col, int row)
 {
+	if (col < 0 || col >= cols || row < 0 || row >= rows)
+		return false;
+
 	return (board[row][col] == 0
 		&& board[row-1][col] == 0
 		&& board[row][col+1] == 0
@@ -43,15 +46,33 @@ void Tetris::MovePiece(Direction direction)
 	{
 		case Direction::Down:
 			newPosition[0]--;
-			bool canMove = IsPositionFree(newPosition[0], newPosition[1]);
-			if (!canMove)
-			{
-				IsTerminated = true;
-				return;
-			}
-			ErasePiece();
-			DrawPiece(newPosition);
+			break;
+		case Direction::Left:
+			newPosition[1]--;
+			break;
+		case Direction::Right:
+			newPosition[1]++;
+			break;
 	}
+
+	bool canMove = IsPositionFree(newPosition[0], newPosition[1]);
+	if (canMove)
+	{
+		ErasePiece();
+		DrawPiece(newPosition, FieldState::Piece);
+		return;
+	}
+
+	SettleAndNewPiece(newPosition);
+}
+
+void Tetris::SettleAndNewPiece(int position[2])
+{
+	DrawPiece(position, FieldState::Ground);
+	AddNewPiece();
+	IsTerminated = !IsPositionFree(currentPiecePosition[0], currentPiecePosition[1]);
+	if (IsTerminated) return;
+	DrawPiece(currentPiecePosition, FieldState::Piece);
 }
 
 void Tetris::ErasePiece()
@@ -65,7 +86,7 @@ void Tetris::ErasePiece()
 	board[row - 1][col + 1] = 0;
 }
 
-void Tetris::DrawPiece(int newPosition[2])
+void Tetris::DrawPiece(int newPosition[2], FieldState state)
 {
 	currentPiecePosition[0] = newPosition[0];
 	currentPiecePosition[0] = newPosition[0];
@@ -73,10 +94,10 @@ void Tetris::DrawPiece(int newPosition[2])
 	int row = newPosition[0];
 	int col = newPosition[1];
 
-	board[row][col] = 2;
-	board[row - 1][col] = 2;
-	board[row][col + 1] = 2;
-	board[row - 1][col + 1] = 2;
+	board[row][col] = (int)state;
+	board[row - 1][col] = (int)state;
+	board[row][col + 1] = (int)state;
+	board[row - 1][col + 1] = (int)state;
 }
 
 Tetris::~Tetris()
@@ -93,10 +114,12 @@ void Tetris::Update()
 
 void Tetris::MoveRight()
 {
+	MovePiece(Direction::Right);
 }
 
 void Tetris::MoveLeft()
 {
+	MovePiece(Direction::Left);
 }
 
 void Tetris::RotateClockWise()
