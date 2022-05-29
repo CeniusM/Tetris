@@ -1,0 +1,15 @@
+
+
+void GameLoop()
+{
+
+
+	while (true)
+	{
+
+
+
+	}
+
+
+}
