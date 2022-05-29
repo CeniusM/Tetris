@@ -5,36 +5,41 @@
 #include "Tetris.h"
 #include "TetrisGUI.h"
 #include "Game.h"
+#include "PlayerInput.h"
 
 void GameLoop()
 {
 	Tetris tetrisGame(gameWidth, gameHeight);
 	TetrisGUI gui(tetrisGame.GetBoard(), gameWidth, gameHeight);
+	PlayerInput playerInput('W', '?', 'D', 'A', 'S', ' ');
 
 	while (true)
 	{
 		// timer
 		auto start = std::chrono::high_resolution_clock::now();
 
-
-		// player inputs, Check if high-order bit is set (1 << 15)
-		if (GetKeyState('A') & 0x8000)
-		{
-			tetrisGame.MoveLeft();
-		}
-		if (GetKeyState('D') & 0x8000)
-		{
-			tetrisGame.MoveRight();
-		}
-		if (GetKeyState('W') & 0x8000)
+		playerInput.Update();
+		if (playerInput.rotateClockWise)
 		{
 			tetrisGame.RotateClockWise();
 		}
-		if (GetKeyState('S') & 0x8000)
+		if (playerInput.rotateCounterClockWiseKey)
 		{
 			tetrisGame.RotateCounterClockWise();
 		}
-		if (GetKeyState(' ') & 0x8000)
+		if (playerInput.right)
+		{
+			tetrisGame.MoveRight();
+		}
+		if (playerInput.left)
+		{
+			tetrisGame.MoveLeft();
+		}
+		if (playerInput.down)
+		{
+			tetrisGame.Down();
+		}
+		if (playerInput.dump)
 		{
 			tetrisGame.Dump();
 		}

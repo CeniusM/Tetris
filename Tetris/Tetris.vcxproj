@@ -151,6 +151,9 @@
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="Tetris.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="TimeSpent.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
