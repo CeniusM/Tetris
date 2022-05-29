@@ -1,5 +1,7 @@
 #pragma once
 
+enum class Direction { Down, Right, Left };
+
 class Tetris
 {
 public:
@@ -31,8 +33,12 @@ private:
 	int cols;
 	int** board;
 	int currentPiecePosition[2];
+	int ticksElapsed;
 
 	void InitializeBoard();
 	void AddNewPiece();
+	void MovePiece(Direction direction);
 	bool IsPositionFree(int cols, int rows);
+	void ErasePiece();
+	void DrawPiece(int newPosition[2]);
 };
