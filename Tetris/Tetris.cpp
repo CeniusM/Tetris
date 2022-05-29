@@ -14,8 +14,8 @@ Tetris::Tetris(int cols, int rows)
 
 void Tetris::AddNewPiece()
 {
-	currentPiecePosition[0] = rows;
-	currentPiecePosition[1] = cols / 2;
+	currentPiecePosition[0] = rows-1;
+	currentPiecePosition[1] = (cols-1) / 2;
 }
 
 bool Tetris::IsPositionFree(int col, int row)
