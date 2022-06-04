@@ -51,7 +51,7 @@ void TetrisGUI::SetConsoleSize(int x, int y, int charWidth, int charHeight)
 	MoveWindow(console, r.left, r.top, x * charWidth + 40/*why i need +40, no clue*/, y * charHeight + 40, TRUE);
 }
 
-TetrisGUI::TetrisGUI(int** board, int width, int height)
+TetrisGUI::TetrisGUI(Field** board, int width, int height)
 {
 	this->board = board;
 

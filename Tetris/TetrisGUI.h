@@ -1,11 +1,12 @@
 ﻿#pragma once
-
 #include <Windows.h>
+
+#include "Tetris.h"
 
 class TetrisGUI
 {
 public:
-	TetrisGUI(int** board, int width, int height);
+	TetrisGUI(Field** board, int width, int height);
 	~TetrisGUI();
 
 	void PrintBoard();
@@ -14,7 +15,7 @@ public:
 private:
 	void SetConsoleSize(int x, int y, int charWidth, int charHeight);
 
-	int** board;
+	Field** board;
 
 	int boardWidth;
 	int boardHeight;

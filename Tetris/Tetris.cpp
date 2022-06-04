@@ -6,6 +6,7 @@ Tetris::Tetris(int cols, int rows)
 	this->rows = rows;
 	this->cols = cols;
 
+	points = 0;
 	ticksElapsed = 0;
 	IsTerminated = 0;
 	InitializeBoard();
@@ -23,20 +24,20 @@ void Tetris::AddNewPiece()
 /// </summary>
 bool Tetris::IsPositionFree(int row, int col)
 {
-	if (col <= 0 || col+1 >= cols || row-1 <= 0)
+	if (col < 0 || col+1 >= cols || row-1 <= 0)
 		return false;
 
-	return (board[row][col] != (int)FieldState::Ground
-		&& board[row-1][col] != (int)FieldState::Ground
-		&& board[row][col+1] != (int)FieldState::Ground
-		&& board[row - 1][col + 1] != (int)FieldState::Ground);
+	return (board[row][col] != FieldState::Ground
+		&& board[row-1][col] != FieldState::Ground
+		&& board[row][col+1] != FieldState::Ground
+		&& board[row - 1][col + 1] != FieldState::Ground);
 }
 
 void Tetris::InitializeBoard()
 {
-	board = new int* [rows];
+	board = new Field* [rows];
 	for (int row = 0; row < rows; row++)
-		board[row] = new int[cols] {}; // Curly brackets to initialize values to 0
+		board[row] = new Field[cols] {}; // Curly brackets to initialize values to 0
 }
 
 void Tetris::MovePiece(Direction direction)
@@ -63,20 +64,45 @@ void Tetris::MovePiece(Direction direction)
 	{
 		ErasePiece();
 		DrawPiece(newPosition, FieldState::Piece);
-		return;
 	}
-
-	if(direction == Direction::Down)
+	else if(direction == Direction::Down)
 		SettleAndNewPiece(currentPiecePosition);
 }
 
 void Tetris::SettleAndNewPiece(int position[2])
 {
 	DrawPiece(position, FieldState::Ground);
+
+	// another 2x2 hard code
+	CheckAndEraseLine(position[0]);
+	CheckAndEraseLine(position[0] - 1);
+
 	AddNewPiece();
 	IsTerminated = !IsPositionFree(currentPiecePosition[0], currentPiecePosition[1]);
 	if (IsTerminated) return;
 	DrawPiece(currentPiecePosition, FieldState::Piece);
+}
+
+void Tetris::CheckAndEraseLine(int row)
+{
+	//check and rmove line
+	for (int i = 0; i < cols; i++)
+		if (board[row][i] == FieldState::Empty)
+			return;
+	for (int i = 0; i < cols; i++)
+		board[row][i] = FieldState::Empty;
+
+	// move everthing a line down
+	for (int i = row; i < rows - 1; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			board[i][j] = board[i + 1][j];
+		}
+	}
+	for (int i = 0; i < cols; i++)
+		board[rows - 1][i] = 0;
+	points += 100;
 }
 
 void Tetris::ErasePiece()
@@ -90,7 +116,7 @@ void Tetris::ErasePiece()
 	board[row - 1][col + 1] = (int)FieldState::Empty;
 }
 
-void Tetris::DrawPiece(int newPosition[2], FieldState state)
+void Tetris::DrawPiece(int newPosition[2], int state)
 {
 	currentPiecePosition[0] = newPosition[0];
 	currentPiecePosition[1] = newPosition[1];
@@ -113,7 +139,11 @@ void Tetris::Update()
 	if (IsTerminated) return;
 
 	ticksElapsed++;
-	if (ticksElapsed % 25 != 0) return;
+	if (ticksElapsed % 25 != 0)
+	{
+		//ticksElapsed = 0;
+		return;
+	}
 
 	MovePiece(Direction::Down);
 }
@@ -145,7 +175,7 @@ void Tetris::Dump()
 {
 }
 
-int** Tetris::GetBoard()
+Field** Tetris::GetBoard()
 {
 	return board;
 }

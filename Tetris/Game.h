@@ -1,6 +1,6 @@
 #pragma once
 
-const int gameWidth = 40;
-const int gameHeight = 40;
+const int gameWidth = 10;
+const int gameHeight = 20;
 
 void GameLoop();

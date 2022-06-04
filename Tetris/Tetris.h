@@ -1,7 +1,29 @@
 #pragma once
 
 enum class Direction { Down, Right, Left };
-enum class FieldState { Empty = 0, Piece = 1, Ground = 2 };
+//enum class FieldState { Empty = 0, Piece = 1, Ground = 2 };
+
+static const struct FieldState
+{
+	static const int Empty = 0;
+	static const int Piece = 1;
+	static const int Ground = 2;
+};
+
+struct Field
+{
+	inline bool operator==(int input) {
+		return input == state;
+	}
+	inline bool operator!=(int input) {
+		return input != state;
+	}
+	inline void operator=(int input) {
+		state = input;
+	}
+
+	int state = 0;
+};
 
 class Tetris
 {
@@ -27,7 +49,7 @@ public:
 	void Down();
 	void Dump();
 
-	int** GetBoard();
+	Field** GetBoard();
 
 	/// <summary>
 	/// 1 if the game has terminated.
@@ -37,7 +59,8 @@ public:
 private:
 	int rows;
 	int cols;
-	int** board;
+	int points;
+	Field** board;
 	int currentPiecePosition[2];
 	int ticksElapsed;
 
@@ -46,6 +69,7 @@ private:
 	void MovePiece(Direction direction);
 	bool IsPositionFree(int cols, int rows);
 	void ErasePiece();
-	void DrawPiece(int newPosition[2], FieldState state);
+	void DrawPiece(int newPosition[2], int state);
 	void SettleAndNewPiece(int position[2]);
+	void CheckAndEraseLine(int row);
 };
