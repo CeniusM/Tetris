@@ -1,6 +1,18 @@
 #include <Windows.h>
 
 #include "TetrisGUI.h"
+#include "GameSettings.h"
+
+void TetrisGUI::DrawSquare(int x, int y, wchar_t c)
+{
+	for (int i = 0; i < GameSettings::peiceHeight; i++) // height
+	{
+		for (int j = 0; j < GameSettings::peiceWidth; j++) // width
+		{
+			screen[x + j + (y+i) * screenWidth] = c;
+		}
+	}
+};
 
 void TetrisGUI::PrintBoard()
 {
@@ -9,16 +21,7 @@ void TetrisGUI::PrintBoard()
 	{
 		for (int j = 0; j < boardWidth; j++)
 		{
-			if (board[i][j] == 0)
-			{
-				screen[(j << 1) + reverseI * screenWidth] = ' ';
-				screen[(j << 1) + reverseI * screenWidth + 1] = ' ';
-			}
-			else
-			{
-				screen[(j << 1) + reverseI * screenWidth] = 0x2588;
-				screen[(j << 1) + reverseI * screenWidth + 1] = 0x2588;
-			}
+			DrawSquare(j * GameSettings::peiceWidth, i * GameSettings::peiceHeight, board[reverseI][j] == 0 ? ' ' : 0x2588);
 		}
 		reverseI--;
 	}
@@ -39,6 +42,11 @@ void TetrisGUI::PrintEndScreen()
 				screen[(j << 1) + i * screenWidth] = 0x2588;
 				screen[(j << 1) + i * screenWidth + 1] = 0x2588;
 			}
+			else
+			{
+				screen[(j << 1) + i * screenWidth] = 'X';
+				screen[(j << 1) + i * screenWidth + 1] = 'X';
+			}
 		}
 	}
 }
@@ -48,7 +56,7 @@ void TetrisGUI::SetConsoleSize(int x, int y, int charWidth, int charHeight)
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions
-	MoveWindow(console, r.left, r.top, x * charWidth + 40/*why i need +40, no clue*/, y * charHeight + 40, TRUE);
+	MoveWindow(console, r.left, r.top, x * charWidth + GameSettings::plusSomethingDumb/*why i need +40 ish, no clue*/, y * charHeight + GameSettings::plusSomethingDumb, TRUE);
 }
 
 TetrisGUI::TetrisGUI(Field** board, int width, int height)
@@ -57,8 +65,8 @@ TetrisGUI::TetrisGUI(Field** board, int width, int height)
 
 	boardWidth = width;
 	boardHeight = height;
-	screenWidth = width * 2; // each square is 2 wide
-	screenHeight = height;
+	screenWidth = width * GameSettings::peiceWidth; // each square is 4 wide
+	screenHeight = height * GameSettings::peiceHeight; // each square is 2 heigh
 
 	screen = new wchar_t[screenWidth * screenHeight];
 	for (int i = 0; i < screenWidth; i++)

@@ -146,6 +146,7 @@
     <ClCompile Include="Tetris.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameSettings.h" />
     <ClInclude Include="TetrisGUI.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="PlayerInput.h" />

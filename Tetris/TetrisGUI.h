@@ -13,6 +13,7 @@ public:
 	void PrintEndScreen();
 
 private:
+	void DrawSquare(int x, int y, wchar_t c);
 	void SetConsoleSize(int x, int y, int charWidth, int charHeight);
 
 	Field** board;
@@ -22,7 +23,8 @@ private:
 	int screenWidth;
 	int screenHeight;
 
-	wchar_t* screen;
+	wchar_t* screen; // later make this "screenBuffe"
+	// wchar_t** screen;// and later add a 2d version of it
 	HANDLE hConsole;
 	DWORD dwBytesWritten;
 };

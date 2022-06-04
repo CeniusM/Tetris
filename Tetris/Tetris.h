@@ -21,8 +21,15 @@ struct Field
 	inline void operator=(int input) {
 		state = input;
 	}
-
 	int state = 0;
+};
+
+struct Piece
+{
+	// x and y is the first point
+	// and the field goes off of that 
+	int x = 0, y = 0;
+	Field piece[4][4];
 };
 
 class Tetris

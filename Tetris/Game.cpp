@@ -9,8 +9,8 @@
 
 void GameLoop()
 {
-	Tetris tetrisGame(gameWidth, gameHeight);
-	TetrisGUI gui(tetrisGame.GetBoard(), gameWidth, gameHeight);
+	Tetris tetrisGame(GameSettings::gameWidth, GameSettings::gameHeight);
+	TetrisGUI gui(tetrisGame.GetBoard(), GameSettings::gameWidth, GameSettings::gameHeight);
 	PlayerInput playerInput('W', '?', 'D', 'A', 'S', ' ');
 
 	while (true)

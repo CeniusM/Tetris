@@ -24,7 +24,7 @@ void Tetris::AddNewPiece()
 /// </summary>
 bool Tetris::IsPositionFree(int row, int col)
 {
-	if (col < 0 || col+1 >= cols || row-1 <= 0)
+	if (col < 0 || col+1 >= cols || row < 2) //  row-1 <= 0
 		return false;
 
 	return (board[row][col] != FieldState::Ground
@@ -124,10 +124,10 @@ void Tetris::DrawPiece(int newPosition[2], int state)
 	int row = newPosition[0];
 	int col = newPosition[1];
 
-	board[row][col] = (int)state;
-	board[row - 1][col] = (int)state;
-	board[row][col + 1] = (int)state;
-	board[row - 1][col + 1] = (int)state;
+	board[row][col] = state;
+	board[row - 1][col] = state;
+	board[row][col + 1] = state;
+	board[row - 1][col + 1] = state;
 }
 
 Tetris::~Tetris()
